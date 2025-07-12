@@ -3,7 +3,7 @@
 import { StatusCodes } from 'http-status-codes';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
-import { userServices } from './user.service';
+import { userServices } from './auth.service';
 
 //imported HOF(catchAsync()) to pass the async func there to handle the promise and error, reduced boilerplates
 
