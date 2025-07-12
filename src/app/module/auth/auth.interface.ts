@@ -33,4 +33,14 @@ export interface IUser extends Model<TUser> {
   ): Promise<boolean>;
 }
 
+export type TLoginUser = {
+  email: string;
+  password: string;
+};
+
+export type TUserAuthData = {
+  userEmail: string;
+  role: string;
+};
+
 export type TUserRole = keyof typeof USER_ROLE;

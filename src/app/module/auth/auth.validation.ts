@@ -15,3 +15,13 @@ export const userRegisterValidationSchema = z.object({
       .max(128, { message: 'Password must be 128 characters or fewer' }),
   }),
 });
+
+export const loginUserValidationSchema = z.object({
+  body: z.object({
+    email: z
+      .string()
+      .email({ message: 'A valid email address is required.' })
+      .min(1, { message: 'Email is required.' }),
+    password: z.string().min(1, { message: 'Password is required.' }),
+  }),
+});

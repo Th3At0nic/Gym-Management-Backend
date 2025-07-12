@@ -1,8 +1,10 @@
 import { UserModel } from './auth.model';
-import { TUser } from './auth.interface';
+import { TLoginUser, TUser } from './auth.interface';
 import throwAppError from '../../utils/throwAppError';
 import { StatusCodes } from 'http-status-codes';
 import { USER_ROLE } from '../../constants/user.constant';
+import { generateToken } from './auth.utils';
+import config from '../../config';
 
 const registerUserIntoDB = async (payload: TUser) => {
   const user: TUser = {
@@ -39,4 +41,54 @@ const registerUserIntoDB = async (payload: TUser) => {
   return newUser;
 };
 
-export const authServices = { registerUserIntoDB };
+const loginUserAuth = async (payload: TLoginUser) => {
+  const { email, password: userGivenPassword } = payload;
+
+  const user = await UserModel.isUserExists(email);
+
+  if (!user) {
+    throwAppError(
+      'email',
+      `This Email is not Registered. Please Register first`,
+      StatusCodes.UNAUTHORIZED,
+    );
+  }
+
+  const isPasswordValid = await UserModel.isPasswordCorrect(
+    userGivenPassword,
+    user?.password as string,
+  );
+
+  if (!isPasswordValid) {
+    throwAppError(
+      'password',
+      'The provided password is incorrect. Please try again.',
+      StatusCodes.UNAUTHORIZED,
+    );
+  }
+
+  const jwtPayload = {
+    userEmail: user?.email as string,
+    role: user?.role as string,
+  };
+
+  // create access token and send it to the client
+  const accessToken = generateToken(
+    jwtPayload,
+    config.jwt_access_secret as string,
+    config.jwt_access_expires_in as string,
+  );
+
+  const refreshToken = generateToken(
+    jwtPayload,
+    config.jwt_refresh_secret as string,
+    config.jwt_refresh_expires_in as string,
+  );
+
+  return {
+    accessToken,
+    refreshToken,
+  };
+};
+
+export const authServices = { registerUserIntoDB, loginUserAuth };
