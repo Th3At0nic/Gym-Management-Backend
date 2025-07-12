@@ -3,11 +3,25 @@ import { Model } from 'mongoose';
 import { USER_ROLE } from './user.constant';
 
 export type TUser = {
-  name: string;
+  _id?: string;
   email: string;
   password: string;
-  role: 'admin' | 'user';
-  deactivated: boolean;
+  role: 'admin' | 'trainer' | 'trainee';
+
+  // Common profile fields
+  name: string;
+  phone?: string;
+
+  // Optional trainer-specific fields.. if the role is trainer, the backend and frontend both will allow user to update these fields, if its admin | trainee then prevented
+  specialization?: string;
+  bio?: string;
+
+  // Optional trainee-specific fields..this can be modified by all user for their own profile
+  age?: number;
+  goals?: string;
+
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export interface IUser extends Model<TUser> {
