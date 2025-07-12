@@ -11,6 +11,7 @@ export type TUser = {
   // Common profile fields
   name: string;
   phone?: string;
+  profilePhotoURL?: string;
 
   // Optional trainer-specific fields.. if the role is trainer, the backend and frontend both will allow user to update these fields, if its admin | trainee then prevented
   specialization?: string;
