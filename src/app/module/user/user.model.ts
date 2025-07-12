@@ -5,11 +5,28 @@ import config from '../../config';
 
 export const userSchema = new Schema<TUser>(
   {
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true, select: 0 },
-    role: { type: String, enum: ['admin', 'user'], required: true },
-    deactivated: { type: Boolean, default: false },
+    name: { type: String, required: [true, 'Name is required.'] },
+    email: {
+      type: String,
+      required: [true, 'Email is required.'],
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: [true, 'Password is required.'],
+      select: 0,
+    },
+    role: {
+      type: String,
+      enum: ['admin', 'trainer', 'trainee'],
+      required: [true, 'Role is required.'],
+    },
+    phone: { type: String },
+    profilePhotoURL: { type: String },
+    specialization: { type: String },
+    bio: { type: String },
+    age: { type: Number },
+    goals: { type: String },
   },
   { timestamps: true },
 );
