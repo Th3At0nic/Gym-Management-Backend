@@ -1,10 +1,11 @@
-import { UserModel } from './auth.model';
-import { TLoginUser, TUser } from './auth.interface';
+import { UserModel } from '../user/user.model';
+import { TLoginUser } from './auth.interface';
 import throwAppError from '../../utils/throwAppError';
 import { StatusCodes } from 'http-status-codes';
-import { USER_ROLE } from '../../constants/user.constant';
+import { USER_ROLE } from '../user/user.constant';
 import { generateToken } from './auth.utils';
 import config from '../../config';
+import { TUser } from '../user/user.interface';
 
 const registerUserIntoDB = async (payload: TUser) => {
   const user: TUser = {
