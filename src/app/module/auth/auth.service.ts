@@ -39,4 +39,4 @@ const registerUserIntoDB = async (payload: TUser) => {
   return newUser;
 };
 
-export const userServices = { registerUserIntoDB };
+export const authServices = { registerUserIntoDB };

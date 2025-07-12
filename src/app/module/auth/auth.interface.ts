@@ -4,12 +4,12 @@ import { USER_ROLE } from '../../constants/user.constant';
 
 export type TUser = {
   _id?: string;
+  name: string;
   email: string;
   password: string;
   role: 'admin' | 'trainer' | 'trainee';
 
-  // Common profile fields
-  name: string;
+  // Common profile fields and these fields are for future proofing, and to make it scalable, user can update these flds from his dashboard/profile in frontend
   phone?: string;
   profilePhotoURL?: string;
 

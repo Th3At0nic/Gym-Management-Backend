@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 // Define Zod validation schema
-export const UserValidationSchema = z.object({
+export const userRegisterValidationSchema = z.object({
   body: z.object({
     name: z
       .string()
