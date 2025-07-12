@@ -1,16 +1,17 @@
-import { UserModel } from './user.model';
-import { TUser } from './user.interface';
+import { UserModel } from './auth.model';
+import { TUser } from './auth.interface';
 import throwAppError from '../../utils/throwAppError';
 import { StatusCodes } from 'http-status-codes';
-import { USER_ROLE } from './user.constant';
+import { USER_ROLE } from '../../constants/user.constant';
 
 const registerUserIntoDB = async (payload: TUser) => {
   const user: TUser = {
     name: payload.name,
     email: payload.email,
     password: payload.password,
-    role: USER_ROLE.user,
-    deactivated: false,
+    role: USER_ROLE.trainee,
+    //as only trainee can create and manage his profile and admin will be created manually,
+    //and trainer will be created by admin, so keeping this field(role) fixed as trainee as public registration
   };
 
   //preventing duplicate creation of student
@@ -19,7 +20,7 @@ const registerUserIntoDB = async (payload: TUser) => {
   if (userExisted) {
     throwAppError(
       'email',
-      `The user id: ${user.email} is already registered.`,
+      `${user.email} is already registered.`,
       StatusCodes.CONFLICT,
     );
   }
@@ -30,7 +31,7 @@ const registerUserIntoDB = async (payload: TUser) => {
   if (!newUser) {
     throwAppError(
       'user',
-      'Failed to create user. Please try again later.',
+      'Failed to register. Please try again later.',
       StatusCodes.INTERNAL_SERVER_ERROR,
     );
   }

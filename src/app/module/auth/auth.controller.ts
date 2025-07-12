@@ -9,7 +9,7 @@ import { userServices } from './user.service';
 
 const registerUser = catchAsync(async (req, res, next) => {
   const result = await userServices.registerUserIntoDB(req.body);
-  const message = 'User Registered Successfully';
+  const message = 'Registered Successfully!';
   sendResponse(res, StatusCodes.OK, true, message, result);
 });
 
