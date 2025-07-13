@@ -10,7 +10,7 @@ import { authServices } from './auth.service';
 const registerUser = catchAsync(async (req, res, next) => {
   const result = await authServices.registerUserIntoDB(req.body);
   const message = 'Registered Successfully!';
-  sendResponse(res, StatusCodes.OK, true, message, result);
+  sendResponse(res, StatusCodes.CREATED, true, message, result);
 });
 
 const loginUser = catchAsync(async (req, res, next) => {
