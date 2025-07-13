@@ -6,6 +6,7 @@ import { USER_ROLE } from '../user/user.constant';
 import { generateToken } from './auth.utils';
 import config from '../../config';
 import { TUser } from '../user/user.interface';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
 const registerUserIntoDB = async (payload: TUser) => {
   const user: TUser = {
@@ -92,4 +93,52 @@ const loginUserAuth = async (payload: TLoginUser) => {
   };
 };
 
-export const authServices = { registerUserIntoDB, loginUserAuth };
+const createNewAccessTokenByRefreshToken = async (token: string) => {
+  if (!token) {
+    throwAppError(
+      'authorization',
+      'Authorization is required to access this resource.',
+      StatusCodes.UNAUTHORIZED,
+    );
+  }
+
+  // check if the token is valid
+  // invalid token
+  const decoded = jwt.verify(token, config.jwt_refresh_secret as string);
+
+  // decoded undefined
+  const { userEmail, role } = decoded as JwtPayload;
+
+  // req.user = decoded as JwtPayload;
+
+  const user = await UserModel.isUserExists(userEmail);
+
+  if (!user) {
+    throwAppError(
+      'email',
+      `The ${role} with the email: ${userEmail} not found in the system. Please recheck the Email and try again`,
+      StatusCodes.NOT_FOUND,
+    );
+  }
+
+  if (user) {
+    const jwtPayload = {
+      userEmail: user.email,
+      role: user.role,
+    };
+
+    //create access token and send it to the client
+    const accessToken = generateToken(
+      jwtPayload,
+      config.jwt_access_secret as string,
+      config.jwt_access_expires_in as string,
+    );
+    return { accessToken };
+  } else return null;
+};
+
+export const authServices = {
+  registerUserIntoDB,
+  loginUserAuth,
+  createNewAccessTokenByRefreshToken,
+};
