@@ -6,7 +6,7 @@ import { USER_ROLE } from '../user/user.constant';
 import { ClassScheduleModel } from '../classSchedule/classSchedule.model';
 import { Types } from 'mongoose';
 
-const createAdminIntoDB = async (
+const createTrainerIntoDB = async (
   payload: Pick<TUser, 'email' | 'name' | 'password'>,
 ) => {
   const isUserExists = await UserModel.isUserExists(payload.email);
@@ -100,4 +100,4 @@ const assignTrainerToClassIntoDB = async (
   return updatedSchedule;
 };
 
-export const adminService = { createAdminIntoDB, assignTrainerToClassIntoDB };
+export const adminService = {  createTrainerIntoDB, assignTrainerToClassIntoDB };
