@@ -168,9 +168,11 @@ cp .env.example .env
 dev: bun run start:dev
 ```
 
-## 📊 Relational Diagram
+## 🗺️ Entity Relationship Diagram
 
-![Relational Diagram](./relation-diagram.png)
+![ER Diagram](./assets/Gym-Management-ERD.png)
+
+👉 [Click here to view full diagram in Lucidchart](https://lucid.app/lucidchart/6aa0cbf7-fc1f-498a-99bb-b447c3da79eb/view)
 
 ---
 
