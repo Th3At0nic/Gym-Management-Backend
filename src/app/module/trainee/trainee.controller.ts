@@ -32,7 +32,17 @@ const cancelBookingByTrainee = catchAsync(async (req, res, next) => {
   sendResponse(res, StatusCodes.OK, true, message, result);
 });
 
+const getMyBookedClasses = catchAsync(async (req, res, next) => {
+  const { userEmail } = req.user as JwtPayload;
+
+  const result = await traineeService.getMyBookedClassesFromDB(userEmail);
+
+  const message = 'Your booked classes retrieved successfully.';
+  sendResponse(res, StatusCodes.OK, true, message, result);
+});
+
 export const traineeController = {
   traineeBookClassSchedule,
   cancelBookingByTrainee,
+  getMyBookedClasses,
 };

@@ -17,4 +17,10 @@ router.delete(
   traineeController.cancelBookingByTrainee,
 );
 
+router.get(
+  '/my-classes',
+  auth(USER_ROLE.trainee),
+  traineeController.getMyBookedClasses,
+);
+
 export const traineeRoutes = router;

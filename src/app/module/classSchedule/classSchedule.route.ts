@@ -1,12 +1,8 @@
 import { Router } from 'express';
+import { classScheduleController } from './classSchedule.controller';
 
 const router = Router();
 
-// router.post(
-//   '/class-schedules',
-//   auth(USER_ROLE.admin),
-//   validateRequest(createClassScheduleValidationSchema),
-//   classScheduleController.createClassSchedule,
-// );
+router.get('/', classScheduleController.getAllClassSchedules);
 
 export const classScheduleRoutes = router;

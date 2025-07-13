@@ -142,7 +142,30 @@ const cancelBookingByTraineeIntoDB = async (
   return result;
 };
 
+export const getMyBookedClassesFromDB = async (traineeEmail: string) => {
+  //geting the trainee data by trainee email
+  const trainee = await UserModel.findOne({ email: traineeEmail });
+
+  if (!trainee) {
+    throwAppError(
+      '',
+      'User lookup failed. Please try again later.',
+      StatusCodes.INTERNAL_SERVER_ERROR,
+    );
+  }
+
+  // Fetch all classes where this trainee is booked
+  const bookedClasses = await ClassScheduleModel.find({
+    trainees: trainee?._id,
+  })
+    .populate('trainer') //  populate trainer to show his data 
+    .sort({ date: 1, startTime: 1 }); //sort by upcoming first
+
+  return bookedClasses;
+};
+
 export const traineeService = {
   traineeBookClassScheduleIntoDB,
   cancelBookingByTraineeIntoDB,
+  getMyBookedClassesFromDB,
 };
