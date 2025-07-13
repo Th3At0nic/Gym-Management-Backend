@@ -4,6 +4,8 @@ import { USER_ROLE } from '../user/user.constant';
 import { validateRequest } from '../../middlewares/validateRequest';
 import { userRegisterValidationSchema } from '../auth/auth.validation';
 import { adminController } from './admin.controller';
+import { createClassScheduleValidationSchema } from '../classSchedule/classSchedule.validation';
+import { classScheduleController } from '../classSchedule/classSchedule.controller';
 
 const router = Router();
 
@@ -12,6 +14,13 @@ router.post(
   auth(USER_ROLE.admin),
   validateRequest(userRegisterValidationSchema),
   adminController.createTrainer,
+);
+
+router.post(
+  '/class-schedules',
+  auth(USER_ROLE.admin),
+  validateRequest(createClassScheduleValidationSchema),
+  classScheduleController.createClassSchedule,
 );
 
 export const adminRoutes = router;
