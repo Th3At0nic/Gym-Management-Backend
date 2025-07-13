@@ -19,6 +19,20 @@ const traineeBookClassSchedule = catchAsync(async (req, res, next) => {
   sendResponse(res, StatusCodes.OK, true, message, result);
 });
 
+const cancelBookingByTrainee = catchAsync(async (req, res, next) => {
+  const { classId } = req.params;
+  const { userEmail } = req.user as JwtPayload;
+
+  const result = await traineeService.cancelBookingByTraineeIntoDB(
+    userEmail,
+    classId,
+  );
+
+  const message = 'You have successfully cancelled your class booking.';
+  sendResponse(res, StatusCodes.OK, true, message, result);
+});
+
 export const traineeController = {
   traineeBookClassSchedule,
+  cancelBookingByTrainee,
 };

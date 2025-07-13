@@ -39,7 +39,7 @@ export const traineeBookClassScheduleIntoDB = async (
     );
   }
 
-  // Check if class is full
+  // Check if class is full or not
   if (schedule.trainees.length >= 10) {
     throwAppError(
       'schedule',
@@ -83,6 +83,66 @@ export const traineeBookClassScheduleIntoDB = async (
   return result;
 };
 
+const cancelBookingByTraineeIntoDB = async (
+  userEmail: string,
+  scheduleId: string,
+) => {
+  //geting the schedule
+  const schedule = await ClassScheduleModel.findById(scheduleId);
+
+  if (!schedule) {
+    throwAppError(
+      'scheduleId',
+      'Class schedule not found',
+      StatusCodes.NOT_FOUND,
+    );
+    return;
+  }
+
+  //geting the trainee data by his email
+  const trainee = await UserModel.findOne({ email: userEmail });
+
+  if (!trainee) {
+    throwAppError(
+      '',
+      'User lookup failed. Please try again later.',
+      StatusCodes.INTERNAL_SERVER_ERROR,
+    );
+    return;
+  }
+
+  //checking if the trainee booked the clss or not
+  const alreadyBooked = schedule.trainees.includes(
+    new Types.ObjectId(trainee?._id),
+  );
+
+  if (!alreadyBooked) {
+    throwAppError(
+      'booking',
+      'You are not booked in this class',
+      StatusCodes.BAD_REQUEST,
+    );
+  }
+
+  // Remove trainee
+  schedule.trainees = schedule.trainees.filter(
+    (id) => id.toString() !== trainee._id.toString(),
+  );
+
+  const result = await schedule.save();
+
+  if (!result) {
+    throwAppError(
+      '',
+      "Couldn't cancel booking. Try again.",
+      StatusCodes.INTERNAL_SERVER_ERROR,
+    );
+  }
+
+  return result;
+};
+
 export const traineeService = {
   traineeBookClassScheduleIntoDB,
+  cancelBookingByTraineeIntoDB,
 };

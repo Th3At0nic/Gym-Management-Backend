@@ -11,4 +11,10 @@ router.post(
   traineeController.traineeBookClassSchedule,
 );
 
+router.delete(
+  '/cancel-class/:classId',
+  auth(USER_ROLE.trainee),
+  traineeController.cancelBookingByTrainee,
+);
+
 export const traineeRoutes = router;
