@@ -20,7 +20,7 @@ const routeModules = [
     route: adminRoutes,
   },
   {
-    path: '/trainers',
+    path: '/trainer',
     route: trainerRoutes,
   },
 ];
