@@ -12,7 +12,7 @@ router.post(
 );
 
 router.delete(
-  '/cancel-class/:classId',
+  '/cancel-booking/:classId',
   auth(USER_ROLE.trainee),
   traineeController.cancelBookingByTrainee,
 );
