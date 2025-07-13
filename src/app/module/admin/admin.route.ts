@@ -4,7 +4,10 @@ import { USER_ROLE } from '../user/user.constant';
 import { validateRequest } from '../../middlewares/validateRequest';
 import { userRegisterValidationSchema } from '../auth/auth.validation';
 import { adminController } from './admin.controller';
-import { createClassScheduleValidationSchema } from '../classSchedule/classSchedule.validation';
+import {
+  assignTrainerValidationSchema,
+  createClassScheduleValidationSchema,
+} from '../classSchedule/classSchedule.validation';
 import { classScheduleController } from '../classSchedule/classSchedule.controller';
 
 const router = Router();
@@ -21,6 +24,13 @@ router.post(
   auth(USER_ROLE.admin),
   validateRequest(createClassScheduleValidationSchema),
   classScheduleController.createClassSchedule,
+);
+
+router.patch(
+  '/class-schedules/:classScheduleId/assign-trainer',
+  auth(USER_ROLE.admin),
+  validateRequest(assignTrainerValidationSchema),
+  adminController.assignTrainerToClass,
 );
 
 export const adminRoutes = router;

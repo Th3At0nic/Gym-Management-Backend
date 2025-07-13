@@ -12,4 +12,17 @@ const createTrainer = catchAsync(async (req, res, next) => {
   sendResponse(res, StatusCodes.CREATED, true, message, result);
 });
 
-export const adminController = { createTrainer };
+const assignTrainerToClass = catchAsync(async (req, res, next) => {
+  const { classScheduleId } = req.params;
+  const { trainerId } = req.body;
+
+  const result = await adminService.assignTrainerToClassIntoDB(
+    classScheduleId,
+    trainerId,
+  );
+
+  const message = 'Trainer Assigned Successfully';
+  sendResponse(res, StatusCodes.OK, true, message, result);
+});
+
+export const adminController = { createTrainer, assignTrainerToClass };

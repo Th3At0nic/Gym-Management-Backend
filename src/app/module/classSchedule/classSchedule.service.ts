@@ -11,8 +11,10 @@ const createClassScheduleIntoDB = async (
 ) => {
   const { date, startTime, trainer } = payload;
 
+  //retrieving the classes in the day
   const schedulesForDay = await ClassScheduleModel.find({ date });
 
+  //checking if total class is not more than 5 each day
   if (schedulesForDay.length >= 5) {
     throwAppError(
       'schedule',
