@@ -49,7 +49,6 @@ const createClassScheduleIntoDB = async (
   //check if the trainer exists or not
   const isTrainerExist = await UserModel.findById(trainer);
 
-
   if (!isTrainerExist) {
     throwAppError(
       'trainer',
@@ -112,4 +111,36 @@ const createClassScheduleIntoDB = async (
   return result;
 };
 
-export const classScheduleService = { createClassScheduleIntoDB };
+const getAllClassSchedulesFromDB = async () => {
+  const schedules = await ClassScheduleModel.find({})
+    .populate({
+      path: 'trainer',
+      select: 'name specialization profilePhotoURL', // only safe trainer fields
+    })
+    .sort({ date: 1, startTime: 1 });
+
+  if (!schedules.length) {
+    throwAppError(
+      'schedules',
+      'No Scheduled class found at this moment.',
+      StatusCodes.NOT_FOUND,
+    );
+  }
+
+  // Format and sanitize response
+  const formattedSchedules = schedules.map((schedule) => ({
+    _id: schedule._id,
+    date: schedule.date,
+    startTime: schedule.startTime,
+    endTime: schedule.endTime,
+    trainer: schedule.trainer,
+    availableSlots: 10 - schedule.trainees.length,
+  }));
+
+  return formattedSchedules;
+};
+
+export const classScheduleService = {
+  createClassScheduleIntoDB,
+  getAllClassSchedulesFromDB,
+};
