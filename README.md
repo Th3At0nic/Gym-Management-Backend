@@ -155,15 +155,17 @@ Password: admin123
 ## 🛠️ Run the Project Locally
 
 ```bash
-git clone https://github.com/your-username/gym-management.git
-cd gym-management
+git clone https://github.com/Th3At0nic/Gym-Management-Backend.git
+cd Gym-Management-Backend
 bun install
 
-# Create .env file with required values
+# Create .env file with required environment variables
 cp .env.example .env
 
+# Edit the .env file and fill in your own secrets before running the server
+
 # Start server
-dev: bun run dev
+dev: bun run start:dev
 ```
 
 ## 📊 Relational Diagram
