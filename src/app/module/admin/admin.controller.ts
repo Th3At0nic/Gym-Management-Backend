@@ -25,4 +25,15 @@ const assignTrainerToClass = catchAsync(async (req, res, next) => {
   sendResponse(res, StatusCodes.OK, true, message, result);
 });
 
-export const adminController = { createTrainer, assignTrainerToClass };
+const getAllClassSchedules = catchAsync(async (req, res, next) => {
+  const result = await adminService.getAllClassSchedulesFromDB();
+
+  const message = 'All Class Schedules Retrieved Successfully';
+  sendResponse(res, StatusCodes.CREATED, true, message, result);
+});
+
+export const adminController = {
+  createTrainer,
+  assignTrainerToClass,
+  getAllClassSchedules,
+};

@@ -100,4 +100,22 @@ const assignTrainerToClassIntoDB = async (
   return updatedSchedule;
 };
 
-export const adminService = {  createTrainerIntoDB, assignTrainerToClassIntoDB };
+const getAllClassSchedulesFromDB = async () => {
+  const result = await ClassScheduleModel.find();
+
+  if (!result.length) {
+    throwAppError(
+      'classSchedules',
+      'No Class Schedule found at this moment, try later.',
+      StatusCodes.NOT_FOUND,
+    );
+  }
+
+  return result;
+};
+
+export const adminService = {
+  createTrainerIntoDB,
+  assignTrainerToClassIntoDB,
+  getAllClassSchedulesFromDB,
+};

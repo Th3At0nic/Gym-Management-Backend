@@ -26,6 +26,12 @@ router.post(
   classScheduleController.createClassSchedule,
 );
 
+router.get(
+  '/class-schedules',
+  auth(USER_ROLE.admin),
+  adminController.getAllClassSchedules,
+);
+
 router.patch(
   '/class-schedules/:classScheduleId/assign-trainer',
   auth(USER_ROLE.admin),
