@@ -136,7 +136,7 @@ Password: admin123
 
 ## 🌐 Live Hosting Link
 
-**Backend Server**: [https://your-server-url.vercel.app](https://your-server-url.vercel.app)
+**Backend Server**: [https://gym-management-backend-murex.vercel.app/](https://gym-management-backend-murex.vercel.app/)
 
 ## 📬 Postman Documentation
 
