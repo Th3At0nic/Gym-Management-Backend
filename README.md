@@ -176,6 +176,22 @@ dev: bun run start:dev
 
 ---
 
+### ✨ Future-Proofing & Extra Enhancements
+
+To go beyond the base requirements and simulate a real-world, scalable system, several extra features and architectural decisions were implemented:
+
+- Extensible user model with additional fields like `bio`, `specialization`, `age`, `goals`, and profile picture.
+- Role-specific profile update logic with secure Cloudinary image upload.
+- Strong modular structure separating concerns by role and functionality.
+- Advanced role-based access control middleware.
+- Booking and trainer assignment logic with overlap/time-conflict prevention.
+- Global error handler aligned with standard API response formats.
+- Public class schedule endpoint for booking discovery.
+- Complete Postman documentation with token/env support.
+- `.env.example` provided for quick setup and environment consistency.
+
+These improvements were implemented to make the system future-ready, developer-friendly, and production-aligned.
+
 ✅ All features are implemented based on the provided task description.
 🚀 Project is complete, tested, and submitted on time!
 
